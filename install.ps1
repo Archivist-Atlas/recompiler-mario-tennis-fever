@@ -1,4 +1,4 @@
-﻿# Mario Tennis Fever (MTF Recomp) installer for Windows (driven by NUP Studio)
+# Mario Tennis Fever (MTF Recomp) installer for Windows (driven by NUP Studio)
 param(
     [string]$Nup = "",
     [string]$Dir = "",
@@ -432,11 +432,13 @@ $uninstRegPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\$uni
 $uninstPs1 = Join-Path $Dir "uninstall.ps1"
 $desktopLnk = Join-Path ([Environment]::GetFolderPath("Desktop")) "$safeShortcutName.lnk"
 $startMenuDir = Join-Path ([Environment]::GetFolderPath("Programs")) $safeShortcutName
+$eAcute = [char]0x00E9
+$eCapAcute = [char]0x00C9
 $uninstScript = @"
 Add-Type -AssemblyName System.Windows.Forms
 `$res = [System.Windows.Forms.MessageBox]::Show(
-    "Voulez-vous désinstaller $safeShortcutName ?``n``nLe dossier d'installation et les raccourcis seront supprimés.``nVotre fichier ROM (.nup) et vos sauvegardes ne seront PAS supprimés.",
-    "Désinstaller $safeShortcutName",
+    "Voulez-vous d${eAcute}sinstaller $safeShortcutName ?``n``nLe dossier d'installation et les raccourcis seront supprim${eAcute}s.``nVotre fichier ROM (.nup) et vos sauvegardes ne seront PAS supprim${eAcute}s.",
+    "D${eAcute}sinstaller $safeShortcutName",
     [System.Windows.Forms.MessageBoxButtons]::YesNo,
     [System.Windows.Forms.MessageBoxIcon]::Question
 )
