@@ -105,6 +105,8 @@ $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 
 # ---- 1. Extract ExeFS & RomFS from .nup ----
 $gameDir = Join-Path $Dir "game"
+$env:MTF_CONTENT_ROOT = $gameDir
+$env:MTF_GENERATED_ROOT = $Dir
 $updateDir = Join-Path $gameDir "updates\327680"
 $exefsDir = Join-Path $updateDir "exefs"
 $romfsDir = Join-Path $updateDir "romfs"
