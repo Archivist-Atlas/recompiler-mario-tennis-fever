@@ -1,0 +1,21 @@
+{
+  "id": "mario-tennis-fever",
+  "name": "Mario Tennis Fever",
+  "recompiler_name": "MTF Recomp",
+  "title_ids": [
+    "0400D4201C6EA000",
+    "0400D4201C6EA800"
+  ],
+  "supported_versions": [
+    0,
+    327680
+  ],
+  "default_output_subdir": "Mario Tennis Fever",
+  "shortcut_name": "Mario Tennis Fever",
+  "windows_entrypoint": "install.ps1",
+  "linux_entrypoint": "install.sh",
+  "icon": "game_icon.ico",
+  "repo_url": "https://github.com/Archivist-Atlas/recompiler-mario-tennis-fever.git",
+  "branch": "main",
+  "description": "Recompile Mario Tennis Fever (Nintendo Switch 2, v1.1.1 depuis votre .nup) en exécutable Windows PC natif (Vulkan, mode fenêtré 720p par défaut, plein écran via F11, Échap pour quitter)."
+}

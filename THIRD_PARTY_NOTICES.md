@@ -1,0 +1,52 @@
+# Third-party notices
+
+Code copied or adapted from another project is listed here with its source, the revision it was taken from, its
+licence and the files it went into. The licence texts are in [`licenses/`](licenses/) or next to the vendored code.
+Files that contain adapted code say so in their first lines.
+
+## Code in this repository
+
+| Component | Source and revision | Licence | Used in |
+|---|---|---|---|
+| TotK Recomp: installer window, its event protocol, steps runner, launcher and release assembly (`installer/`, `tools/make_release.py`), host runtime, Vulkan back end, settings menu and its English and Brazilian Portuguese texts (`runtime/ui_text.c`), FSR 1 on the present path (`runtime/vk_fsr.c`), DLAA, its motion-vector translator patch (tools/xlate/patches), content checks | https://github.com/valentderah/totk-pc-recomp @ `eda417fd1df15a17eae995b17a41880771a95f2f`, Copyright (c) 2026 Valiantsin Dzerakh | MIT ([text](licenses/TotK-Recomp.txt)) | `runtime/` (loader, kernel, memory, SVCs, IPC, file system, services, audio, input, the NVN front end and the Vulkan back end, `ui/menu.cpp`, `ui/menu_win.cpp`, `vk_dlaa.c`, `dlaa_mv_spv.h`, `dlaa_mask_spv.h`, `vk_hdr.c`'s swapchain, metadata, encode and menu passes, the shader sources in `runtime/shaders/` but `fxaa_off.frag` and `hdr_compose.comp`), `recomp/` (the generator as TotK Recomp carries it), `tools/hostmem.py`, `tools/check_content.py`, `tools/build_shaders.py`, `tools/make_dlaa_mask.py`, `tools/make_mvobj_fs.py` |
+| LAS Recomp: ARM64 lifter, C generator, FP/SIMD lowering, CPU headers, parts of the runtime | https://github.com/peiikai/LASRecomp @ `da35b83a9611d046a9a681aae668d7085954d37f` (recorder thread design: `a4b53a3`), Copyright (c) 2026 Peiikai | MIT ([text](licenses/LASRecomp.txt)) | `recomp/lifter.py`, `gen.py`, `nso.py`, `module.py`, `simd_c.py`; `runtime/cpu.h`, `simd.h`, `simd_fp.h`; the loader, host-function table and memory reservation; `vk_device.c`, `vk_formats.c`, `vk_sync.c`, `vk_exec.c`, `vk_exec_xfer.c`, `vk_pipeline.c` (enum mappings, vertex formats, pipeline cache), `vk_texture.c` (image creation, uploads, samplers), `tex_astc.c`, `platform/win32.c` (write watch) |
+| MacNativeGames: Horizon services, threads, IPC, file system, audio renderer, sensor fusion | https://github.com/ly05010419/MacNativeGames @ `b75be8cfa704df3701e86130c8ced268e79d6b11` (virtual-core preemption: `33e8fa83052ea1ae09a3583137008e9797e12950`), Copyright (c) 2026 MacNativeGames contributors | MIT ([text](licenses/MacNativeGames.txt)) | `runtime/kernel.c`, `svc.c`, `ipc.c`, `ipc.h`, `fs_host.c`, `fs.h`, `romfs_path.h`, `memory.c`, `boot.c`, `audren.c`, `audren.h`, `audio_mixer.c`, `audio_effects.c`, `audio_reverb.c`, `motion_fusion.c`, `ov_system.c`, `ov_gfx.c`, `nvn_procs.inc` (the NVN proc names) |
+| d2r-mobile: NVN front end, object layouts, command records, thread environment (as MacNativeGames carries it) | https://github.com/jhaizhou-ops/d2r-mobile @ `53e7c5bb9ca3ea53e2160005be8fbe920cd9cb53`, Copyright (c) 2026 jhaizhou | MIT ([text](licenses/d2r-mobile.txt)) | `runtime/nvn_api.h`, `nvn_api_core.c`, `nvn_api_obj.c`, `nvn_api_cmd.c`, `nvn_ext.c`, `nvn_obj.h`, `nvn_hmap.h`, `nvn_pool_index.h`, `nvn_tex.c`, `nvn_tex.h`, `tex_deswizzle.c`; replay behaviour in `vk_memory.c`, `vk_texture.c`, `vk_exec.c`, `vk_exec_draw.c`, `vk_usnap.c`; `kernel.c` (thread environment) |
+| nxnative: the Switch 2 knowledge this game needs, its shader translator front end and shader tooling | https://github.com/seedds/nxnative @ `b2d46b86d03f4b03afe11ea61c67cdf00d7a5345`, Copyright (c) 2026 seedds | MIT ([text](licenses/nxnative.txt)) | Copied: `tools/xlate/` (changes marked "(MTF Recomp)"), `tools/shaders/cra.py` (unmodified); adapted: `tools/shaders/extract.py`, `int_inputs.py`, the job layout of `translate.py`, `profiles/0400D4201C6EA000/shader_facts.tsv` and the memory figures of `profile.json`, the profile picture bytes of `runtime/ov_offline.c`. Behaviour followed, code written here: `runtime/ro.c`, `kernel.c` (thread settle), `svc.c` (Switch 2 GetInfo), `romfs.c`, `ov_hid.c`, `ov_switch2.c`, `ov_audio.c`, `ov_audioout.c`, `ov_codec.c`, `ov_font.c`, `ov_net.c`, `ov_offline.c`, `nvn2_ext.c`, `nvn2_ctl.h`, `tex_deswizzle.c` (the Switch 2 GOB order) |
+| MacNativeGames: reading the system fonts from a firmware | https://github.com/ly05010419/MacNativeGames @ `b75be8cfa704df3701e86130c8ced268e79d6b11`, as TotK Recomp vendors it | MIT (`tools/vendor/macnativegames/LICENSE`) | `tools/vendor/macnativegames/` (unmodified) |
+| NVN type definitions | h1k421, via MacNativeGames, Copyright (c) 2020 h1k421 | MIT (in the file) | `runtime/nvn.h` |
+| deko3d block-linear layout | https://github.com/devkitPro/deko3d (`source/dk_image.cpp`), via MacNativeGames, Copyright (C) 2018-2020 fincs | zlib (in the file) | `runtime/nvn_tex.c`, `runtime/nvn_tex.h` |
+| Ryujinx audio: voice state and effects | https://github.com/Ryujinx/Ryujinx (Ryujinx.Audio), via MacNativeGames, Copyright (c) Ryujinx Team and Contributors | MIT ([text](licenses/Ryujinx.txt)) | `runtime/audren.c`, `audio_effects.c`, `audio_effects.h`, `audio_reverb.c`, `audio_reverb.h` |
+| NUP reference reader | https://github.com/a55uka/nup @ `a4840f06c94ddeb414eea5b33c9704ffe995f11c` | MIT (`tools/vendor/nup/LICENSE`) | `tools/vendor/nup/` (one change: the `TVL` enum starts at 1, as in `SPEC.md`) |
+| Hookshot: the frame-step scan | https://github.com/NotRexed/Hookshot @ `9aef4b4`, Copyright (c) 2026 NotRexed | MIT | the `MTF_SCAN_DT` diagnostic in `runtime/gfx_stubs.c` |
+| Dear ImGui 1.91.9 (core and Vulkan back end, unmodified) | https://github.com/ocornut/imgui, Copyright (c) 2014-2025 Omar Cornut | MIT (`runtime/third_party/imgui/LICENSE.txt`) | `runtime/third_party/imgui/`, the in-game menu |
+| SavageWindRecomp performance overlay: the frame ring and its one-second summary, the NVML calls, the sampling loop, the full panel's layout | https://github.com/Revivedx/SavageWindRecomp @ `575ad88e02f9a89a9a885d90039d48af33c982f4` (`runtime/perfmon.c`, `runtime/perfmon.h`, `perf_overlay_draw` in `runtime/ui/menu.mm`), Copyright (c) 2026 Revivedx and the Savage Wind Recomp contributors, Copyright (c) 2026 Peiikai | MIT | `runtime/perfmon.c`, `runtime/perfmon.h`, `runtime/ui/menu.cpp` |
+| AMD Display Library (ADL) declarations: `AdapterInfo`, `ADLSingleSensorData`, `ADLPMLogDataOutput`, the `ADL_PMLOG_*` sensor numbers and the `ADL2_*` function signatures | https://github.com/GPUOpen-LibrariesAndSDKs/display-library @ `84c881cb2136f04287eb3af12de00a9e2867aa9e` (`include/adl_structures.h`, `include/adl_defines.h`, `include/adl_sdk.h`), Copyright (c) 2016 - 2022 Advanced Micro Devices, Inc. | MIT | `runtime/perfmon.c` |
+| SavageWindRecomp settings menu: two-pane option rows (row look, left / right stepping, hold speed-up, description pane), the menu style and tab bar | https://github.com/Revivedx/SavageWindRecomp @ `575ad88e02f9a89a9a885d90039d48af33c982f4` (`runtime/ui/option_rows.mm`, `runtime/ui/menu.mm`), Copyright (c) 2026 Revivedx and the Savage Wind Recomp contributors, Copyright (c) 2026 Peiikai | MIT | `runtime/ui/option_rows.cpp`, `runtime/ui/menu.cpp` (the style, the tab bar and the window over a dimmed game) |
+| AMD FidelityFX Super Resolution 1.0 (`ffx_a.h`, `ffx_fsr1.h`, unmodified; licence text in `runtime/shaders/ffx/LICENSE.txt`) | https://github.com/GPUOpen-Effects/FidelityFX-FSR @ `a21ffb8f6c13233ba336352bdff293894c706575`, Copyright (c) 2021 Advanced Micro Devices, Inc. | MIT | `runtime/shaders/ffx/`, `runtime/shaders/fsr_easu.comp`, `runtime/shaders/fsr_rcas.comp` (through `runtime/vk_fsr.c`) |
+| Roboto Medium | https://fonts.google.com/specimen/Roboto, Copyright 2011 Google Inc. | Apache-2.0 (`runtime/ui/fonts/LICENSE-Roboto.txt`) | `runtime/ui/fonts/Roboto-Medium.ttf`, embedded in the menu |
+
+Design ideas taken without code: Savage Wind Recomp (https://github.com/Revivedx/SavageWindRecomp), for the recorder
+thread and the depth twins of `vk_exec_draw.c`.
+
+## Fetched or linked at build time (not in this repository)
+
+| Component | Source | Licence | Used for |
+|---|---|---|---|
+| Shader translator library (Ryujinx.Graphics.Shader with an Ampere front end, Ryujinx.Common) | `dm/third_party/ryujinx` of nxnative @ `b2d46b8`, fetched by `tools/fetch_translator.ps1` | MIT ([text](licenses/Ryujinx.txt)) | `tools/xlate` builds against it; it runs at install time, nothing of it is in the game |
+| SDL3, libopus, libvpx, zstd and their MinGW runtime DLLs | MSYS2 UCRT64 packages, gathered by `tools/make_deps.py` | zlib (SDL3), BSD-3-Clause (libopus, libvpx, zstd), GPL-3.0 with the GCC Runtime Library Exception (libstdc++, libgcc), MIT (winpthreads), LGPL-2.1 (libiconv, unmodified) | input, audio and video decoding; the DLLs go beside `mtf-recomp.exe` |
+| Vulkan Memory Allocator 3.4.0 (header-only) | MSYS2 UCRT64 | MIT | `runtime/vk_vma.cpp` |
+| libc++ and libunwind | llvm-mingw 20261104 | Apache-2.0 with LLVM exception | the C++ runtime beside `mtf-recomp.exe` |
+| NVIDIA DLSS (`nvngx_dlss.dll`) | not distributed: the setup downloads it from https://github.com/NVIDIA/DLSS when the player ticks the box, or the player supplies it | NVIDIA RTX SDK licence | DLAA and DLSS on RTX GPUs (`runtime/vk_dlaa.c` loads it at run time) |
+
+## Bundled in the release package (not in this repository)
+
+`MTF-Setup-<version>-windows.zip` also carries these programs, with their licence texts in its `licenses\` folder.
+
+| Component | Source | Licence | Used for |
+|---|---|---|---|
+| Python (embeddable) with tkinter, Tcl/Tk | https://www.python.org | PSF, Tcl/Tk licence | runs the installer |
+| NumPy, lz4, zstandard, backports.zstd, Capstone, cryptography, cffi, pycparser | PyPI | BSD-3-Clause; cryptography Apache-2.0 or BSD-3-Clause; cffi MIT | the installer's tools |
+| LLVM-MinGW 20261104 | https://github.com/mstorsjo/llvm-mingw | Apache-2.0 with LLVM exception and the licences of its parts | compiles the game on the player's PC |
+| CMake, Ninja | https://cmake.org, https://ninja-build.org | BSD-3-Clause, Apache-2.0 | build the game on the player's PC |
+| .NET runtime | https://dotnet.microsoft.com | MIT | runs the shader translator |
