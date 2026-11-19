@@ -44,5 +44,9 @@
     "{{EXE_PATH}}",
     "--profile",
     "{{SAVE_DIR}}"
+  ],
+  "expected_title_ids": [
+    "0400D4201C6EA000",
+    "0400D4201C6EA800"
   ]
 }
