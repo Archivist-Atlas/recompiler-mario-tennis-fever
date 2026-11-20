@@ -111,20 +111,34 @@ $updateDir = Join-Path $gameDir "updates\327680"
 $exefsDir = Join-Path $updateDir "exefs"
 $romfsDir = Join-Path $updateDir "romfs"
 if (-not (Test-Path -LiteralPath (Join-Path $exefsDir "main")) -or -not (Test-Path -LiteralPath $romfsDir)) {
-    Say "extracting ExeFS and RomFS from .nup..."
-    $auditJson = Join-Path $workRoot "nup-audit.json"
-    Push-Location $source
-    try {
-        & $pyExe -m tools.nup_audit $Nup --out $auditJson
-        if ($LASTEXITCODE -ne 0) { Say "nup_audit failed"; exit 1 }
-        & $pyExe -m tools.nup_extract $auditJson --out $gameDir
-        if ($LASTEXITCODE -ne 0) { Say "nup_extract failed"; exit 1 }
-    } finally {
-        Pop-Location
-    }
-    $baseDir = Join-Path $gameDir "base"
-    if (Test-Path -LiteralPath $baseDir) {
-        Remove-Item -Recurse -Force $baseDir -ErrorAction SilentlyContinue
+    if (Test-Path -LiteralPath $Nup -PathType Container) {
+        $srcExefs = if (Test-Path -LiteralPath (Join-Path $Nup "exefs\main")) { Join-Path $Nup "exefs" } else { $Nup }
+        $srcRomfs = Join-Path $Nup "romfs"
+        if (-not (Test-Path -LiteralPath (Join-Path $srcExefs "main")) -or -not (Test-Path -LiteralPath $srcRomfs)) {
+            Say "error: folder must contain exefs/main and romfs/: $Nup"; exit 1
+        }
+        Say "copying ExeFS and RomFS from folder..."
+        New-Item -ItemType Directory -Force -Path $updateDir | Out-Null
+        if (Test-Path -LiteralPath $exefsDir) { Remove-Item -Recurse -Force $exefsDir }
+        if (Test-Path -LiteralPath $romfsDir) { Remove-Item -Recurse -Force $romfsDir }
+        Copy-Item -LiteralPath $srcExefs -Destination $exefsDir -Recurse -Force
+        Copy-Item -LiteralPath $srcRomfs -Destination $romfsDir -Recurse -Force
+    } else {
+        Say "extracting ExeFS and RomFS from .nup..."
+        $auditJson = Join-Path $workRoot "nup-audit.json"
+        Push-Location $source
+        try {
+            & $pyExe -m tools.nup_audit $Nup --out $auditJson
+            if ($LASTEXITCODE -ne 0) { Say "nup_audit failed"; exit 1 }
+            & $pyExe -m tools.nup_extract $auditJson --out $gameDir
+            if ($LASTEXITCODE -ne 0) { Say "nup_extract failed"; exit 1 }
+        } finally {
+            Pop-Location
+        }
+        $baseDir = Join-Path $gameDir "base"
+        if (Test-Path -LiteralPath $baseDir) {
+            Remove-Item -Recurse -Force $baseDir -ErrorAction SilentlyContinue
+        }
     }
 }
 if (-not (Test-Path -LiteralPath (Join-Path $exefsDir "main"))) {
